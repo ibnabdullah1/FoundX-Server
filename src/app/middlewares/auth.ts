@@ -3,10 +3,10 @@ import httpStatus from 'http-status';
 import { JwtPayload } from 'jsonwebtoken';
 import config from '../config';
 import AppError from '../errors/AppError';
-import { catchAsync } from '../utils/catchAsync';
 import { USER_ROLE } from '../modules/User/user.constant';
-import { verifyToken } from '../utils/verifyJWT';
 import { User } from '../modules/User/user.model';
+import { catchAsync } from '../utils/catchAsync';
+import { verifyToken } from '../utils/verifyJWT';
 
 const auth = (...requiredRoles: (keyof typeof USER_ROLE)[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
@@ -23,7 +23,6 @@ const auth = (...requiredRoles: (keyof typeof USER_ROLE)[]) => {
     ) as JwtPayload;
 
     const { role, email, iat } = decoded;
-
     // checking if the user is exist
     const user = await User.isUserExistsByEmail(email);
 
